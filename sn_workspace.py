@@ -195,12 +195,12 @@ def calc_avg_delt_e(original_names_text_file):
     # Plotting
     plt.figure(figsize=(10, 5))
 
-    # Plot non-critical subsets first (faint blue)
+    # Plot non-critical subsets first (blue)
     for subset_id, y_vals, x in zip(all_subset_ids, all_fatigue_values, x_vals):
         if subset_id != final_crit_subset:
             plt.plot(x, y_vals, color='blue', alpha=0.3)
 
-    # Plot critical subset last (bold red, on top)
+    # Plot critical subset last (red)
     for subset_id, y_vals, x in zip(all_subset_ids, all_fatigue_values, x_vals):
         if subset_id == final_crit_subset:
             plt.plot(x, y_vals, color='red', linewidth=2, label=f'Critical Subset')
@@ -238,7 +238,7 @@ def show_crit_loc(crit_subset_id, results_folder, images_folder):
         Path to the 'images' folder (contains raw images used in DICe).
     """
 
-    # --- Step 1: Get and load first image ---
+    # Get and load first image
     image_files = sorted([f for f in os.listdir(images_folder) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.tif'))])
     if not image_files:
         raise FileNotFoundError("No image files found in images folder.")
@@ -246,7 +246,7 @@ def show_crit_loc(crit_subset_id, results_folder, images_folder):
     img = cv2.imread(first_image_path)
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert BGR (OpenCV default) → RGB (matplotlib)
 
-    # --- Step 2: Get coordinates of critical subset ---
+    # Get coordinates of critical subset
     # Pick the first .txt result file from results folder
     dice_files = sorted([f for f in os.listdir(results_folder) if f.endswith('.txt')])
     if not dice_files:
@@ -268,7 +268,7 @@ def show_crit_loc(crit_subset_id, results_folder, images_folder):
     x_coord = subset_row['COORDINATE_X'].values[0]
     y_coord = subset_row['COORDINATE_Y'].values[0]
 
-    # --- Step 3: Plot image with critical subset marker ---
+    # Plot image with critical subset marker
     plt.figure(figsize=(8, 6))
     plt.imshow(img_rgb)
     plt.scatter(x_coord, y_coord, c='red', s=80, marker='.', label=f'Critical Subset {crit_subset_id}')
@@ -280,7 +280,7 @@ def show_crit_loc(crit_subset_id, results_folder, images_folder):
 
 # MAIN
 
-# USER- enter path to folder with ALL notch DICe directories for this specimen
+# USER - enter path to folder with ALL notch DICe directories for this specimen
 all_notches_folder = 'path/to/dice/directories/for/all/notches'
 
 for notch_name in os.listdir(all_notches_folder):
