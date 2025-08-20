@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import glob
 
-folder_path = '/Users/janhavijoglekar/Desktop/174_H1050_cycles100to110_sorted/Notch_08'
+folder_path = 'Path/to/sorted/notch/folder' # ex. '/Users/JJ/Desktop/SS410_sorted/Notch_08'
 folder_description = folder_path.split('/')[4:6]
 file_pattern = os.path.join(folder_path, '*.bmp')
 files = glob.glob(file_pattern)
